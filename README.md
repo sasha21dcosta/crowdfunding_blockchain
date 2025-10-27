@@ -29,7 +29,7 @@ A professional full-stack decentralized application (DApp) built with Solidity a
 
 ### 1. Download Project
 ```bash
-git clone https://github.com/yourusername/blockchain_project.git
+git clone https://github.com/sasha21dcosta/blockchain_project.git
 cd blockchain_project
 ```
 
