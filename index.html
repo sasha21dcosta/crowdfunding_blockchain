@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Decentralized Crowdfunding Platform</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Try primary CDN -->
-    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js" onerror="console.error('Primary Ethers CDN failed, trying fallback...')"></script>
+    <!-- Use reliable CDN for Ethers.js -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
     <!-- Fallback CDN if primary fails -->
     <script>
         if (typeof ethers === 'undefined') {
             console.log('Loading Ethers.js from fallback CDN...');
             const script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js';
+            script.src = 'https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js';
             script.onerror = function() {
                 console.error('All Ethers.js CDNs failed!');
                 alert('Critical Error: Could not load Ethers.js library. Please check your internet connection.');
@@ -48,6 +48,9 @@
         <div class="container">
             <h2>Connect Your Wallet</h2>
             <button id="connectWallet" class="btn btn-primary">Connect MetaMask</button>
+            <button id="debugConfig" class="btn btn-secondary" style="margin-left: 10px;">Debug Config</button>
+            <button id="viewBlockchain" class="btn btn-secondary" style="margin-left: 10px;">View on Blockchain</button>
+            <button id="testRefunds" class="btn btn-secondary" style="margin-left: 10px;">Test Refunds</button>
             <div id="connectionStatus" class="status-message"></div>
         </div>
     </section>
@@ -71,8 +74,8 @@
                         <input type="number" id="campaignGoal" step="0.01" placeholder="0.0" required>
                     </div>
                     <div class="form-group">
-                        <label for="campaignDuration">Duration (Days)</label>
-                        <input type="number" id="campaignDuration" placeholder="30" required>
+                        <label for="campaignDuration">Duration (Minutes)</label>
+                        <input type="number" id="campaignDuration" step="1" min="1" max="525600" placeholder="1440" required>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-success">Create Campaign</button>
@@ -109,10 +112,22 @@
         </div>
     </div>
 
+    <!-- Modal for viewing contributors -->
+    <div id="contributorsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Campaign Contributors</h3>
+            <p id="contributorsCampaignTitle"></p>
+            <div id="contributorsList" class="contributors-list">
+                <div class="loading">Loading contributors...</div>
+            </div>
+        </div>
+    </div>
+
     <!-- Notification Toast -->
     <div id="toast" class="toast"></div>
 
-    <script src="config.js"></script>
-    <script src="script.js"></script>
+    <script src="config.js?v=1"></script>
+    <script src="script.js?v=1"></script>
 </body>
 </html>

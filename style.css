@@ -241,6 +241,11 @@ h2::after {
     color: var(--text-primary);
 }
 
+.btn-warning {
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    color: var(--text-primary);
+}
+
 /* Wallet Section */
 .wallet-section {
     background: var(--card-bg);
@@ -544,6 +549,12 @@ textarea {
     border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
+.status-refunded {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22C55E;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
 /* Modal */
 .modal {
     display: none;
@@ -712,4 +723,52 @@ textarea {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--primary-color);
+}
+
+/* Contributors Modal Styles */
+.contributors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.contributor-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--bg-tertiary);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.contributor-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.contributor-address {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.contributor-amount {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.contributor-last {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.contributors-list .loading {
+    text-align: center;
+    color: var(--text-secondary);
+    font-style: italic;
 }
