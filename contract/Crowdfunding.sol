@@ -6,6 +6,7 @@ contract Crowdfunding {
         address payable owner;
         string title;
         string description;
+        string imageUrl;
         uint goal;
         uint deadline;
         uint fundsRaised;
@@ -28,6 +29,7 @@ contract Crowdfunding {
     function createCampaign(
         string memory _title,
         string memory _description,
+        string memory _imageUrl,
         uint _goal,
         uint _durationInMinutes
     ) public {
@@ -38,6 +40,7 @@ contract Crowdfunding {
         newCampaign.owner = payable(msg.sender);
         newCampaign.title = _title;
         newCampaign.description = _description;
+        newCampaign.imageUrl = _imageUrl;
         newCampaign.goal = _goal;
         newCampaign.deadline = block.timestamp + (_durationInMinutes * 1 minutes);
         newCampaign.fundsRaised = 0;
@@ -130,6 +133,7 @@ contract Crowdfunding {
             address owner,
             string memory title,
             string memory description,
+            string memory imageUrl,
             uint goal,
             uint deadline,
             uint fundsRaised,
@@ -137,7 +141,7 @@ contract Crowdfunding {
         )
     {
         Campaign storage c = campaigns[_id];
-        return (c.owner, c.title, c.description, c.goal, c.deadline, c.fundsRaised, c.completed);
+        return (c.owner, c.title, c.description, c.imageUrl, c.goal, c.deadline, c.fundsRaised, c.completed);
     }
 
     function getCampaignWithRefund(uint _id)
@@ -147,6 +151,7 @@ contract Crowdfunding {
             address owner,
             string memory title,
             string memory description,
+            string memory imageUrl,
             uint goal,
             uint deadline,
             uint fundsRaised,
@@ -155,6 +160,16 @@ contract Crowdfunding {
         )
     {
         Campaign storage c = campaigns[_id];
-        return (c.owner, c.title, c.description, c.goal, c.deadline, c.fundsRaised, c.completed, c.refunded);
+        return (
+            c.owner,
+            c.title,
+            c.description,
+            c.imageUrl,
+            c.goal,
+            c.deadline,
+            c.fundsRaised,
+            c.completed,
+            c.refunded
+        );
     }
 }

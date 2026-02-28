@@ -1,147 +1,79 @@
-# 🚀 Decentralized Crowdfunding Platform
+# 🚀 Decentralized Crowdfunding DApp
 
-A modern crowdfunding DApp frontend with automatic refund functionality. Users create campaigns, fund projects, and receive automatic refunds if goals aren't met.
+Minimal frontend for a crowdfunding smart contract on Ethereum Sepolia.  
+Users create campaigns (with images), fund them in ETH, and get automatic refunds if goals aren’t met.
 
 ## ✨ Features
 
-- 🔐 **MetaMask Integration** - Seamless wallet connection
-- 📝 **Campaign Creation** - Create detailed fundraising campaigns
-- 💰 **Secure Funding** - Contribute ETH to support campaigns
-- 🔄 **Automatic Refunds** - Contributors automatically refunded if goals aren't met
-- 💸 **Smart Withdrawals** - Campaign owners withdraw funds when goals are reached
-- 👥 **Multi-User Support** - Anyone can create or fund campaigns
-- 📊 **Real-Time Tracking** - Live progress updates and contributor visibility
+- **MetaMask** wallet connection
+- **Campaign creation** with title, description, image URL, goal, duration
+- **Secure funding** in ETH
+- **Automatic refunds** when goal not reached by deadline
+- **Owner withdrawals** when goal is reached
 
-## 🛠️ Tech Stack
+## 🛠 Tech Stack
 
-- **Frontend**: HTML5, CSS3, JavaScript, Ethers.js v5
-- **Smart Contract**: Solidity ^0.8.0 (deploy separately on Remix)
-- **Blockchain**: Ethereum Sepolia Testnet
+- **Frontend**: HTML, CSS, JavaScript, Ethers.js v5  
+- **Contract**: Solidity ^0.8.0 (deployed via Remix)  
+- **Network**: Ethereum Sepolia Testnet  
 - **Wallet**: MetaMask
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- MetaMask extension installed
-- Sepolia testnet ETH
-- Modern web browser
+1. **Prerequisites**
+   - MetaMask installed and on **Sepolia**
+   - Some Sepolia ETH (e.g. from `https://sepoliafaucet.com`)
 
-### 1. Get Sepolia ETH
-1. Go to [Sepolia Faucet](https://sepoliafaucet.com/)
-2. Enter your MetaMask wallet address
-3. Request test ETH (usually 0.1-0.5 ETH)
-4. Wait for confirmation (1-2 minutes)
+2. **Deploy contract (Remix)**
+   - Open `Crowdfunding.sol` from `contracts/` in [Remix](https://remix.ethereum.org/)
+   - Compile with Solidity 0.8.x
+   - Deploy to **Sepolia** (Injected Provider – MetaMask)
+   - Copy the deployed contract address
 
-### 2. Deploy Smart Contract
-1. Open [Remix IDE](https://remix.ethereum.org/)
-2. Create new file: `Crowdfunding.sol`
-3. Copy code from `contracts/Crowdfunding.sol`
-4. Compile with Solidity 0.8.0+
-5. Deploy on Sepolia testnet
-6. **Copy the contract address**
+3. **Configure frontend**
+   - Open `config.js`
+   - Set `CONTRACT_ADDRESS` to your deployed address
+   - (Optional) replace `CONTRACT_ABI` with the ABI from Remix
 
-### 3. Configure Frontend
-1. Open `config.js`
-2. Update `CONTRACT_ADDRESS` with your deployed contract address
-3. Save the file
+4. **Run frontend**
+   ```bash
+   # From project root
+   python -m http.server 8000
+   ```
+   Open `http://localhost:8000` in your browser.
 
-### 4. Run Application
-```bash
-# Using Python
-python -m http.server 8000
+## 📋 Usage
 
-# Using Node.js
-npx http-server
+- **Connect wallet**: Click “Connect MetaMask” (Sepolia only).  
+- **Create campaign**: Fill title, description, image URL, goal (ETH), duration (minutes) → confirm tx.  
+- **Fund campaign**: Choose a campaign → “Fund Campaign” → enter ETH → confirm tx.  
+- **Withdraw**: Campaign owner clicks “Withdraw” after goal is reached.  
+- **Refunds**: When deadline passes and goal not reached, contributors are refunded automatically/on `processRefunds`.
 
-# Using Live Server (VS Code)
-Right-click index.html → "Open with Live Server"
-```
-
-Open `http://localhost:8000` in your browser
-
-## 📋 How to Use
-
-### Create Campaign
-1. Connect MetaMask wallet
-2. Fill campaign details (title, description, goal in ETH, duration in minutes)
-3. Click "Create Campaign"
-4. Confirm transaction in MetaMask
-
-### Fund Campaign
-1. Browse active campaigns
-2. Click "Fund Campaign"
-3. Enter ETH amount
-4. Confirm transaction
-
-### Automatic Refunds
-- **No action required** - refunds happen automatically
-- When deadline passes without reaching goal
-- All contributors receive their money back
-
-### Withdraw Funds
-- **Campaign owners only**
-- Available when goal is reached
-- Click "Withdraw" button
-
-## 🔧 Smart Contract Functions
+## 🔧 Contract (high level)
 
 ```solidity
-createCampaign(string _title, string _description, uint _goal, uint _durationInMinutes)
-fundCampaign(uint _id) public payable
-withdrawFunds(uint _id) public
-getCampaign(uint _id) public view returns (...)
-canRefund(uint _id) public view returns (bool)
+createCampaign(string _title, string _description, string _imageUrl, uint _goal, uint _durationInMinutes)
+fundCampaign(uint _id) payable
+withdrawFunds(uint _id)
+canRefund(uint _id) view returns (bool)
+processRefunds(uint _id)
+getCampaign(uint _id) view returns (owner, title, description, imageUrl, goal, deadline, fundsRaised, completed)
 ```
 
-## 📁 Project Structure
+## 📁 Structure
 
 ```
-blockchain_project/               # Frontend Application
-├── contracts/
-│   └── Crowdfunding.sol          # Smart contract (deploy on Remix)
-├── index.html                    # Main HTML structure
-├── style.css                     # Styling and responsive design
-├── script.js                     # Frontend logic and blockchain integration
-├── config.js                     # Contract configuration
-└── README.md                     # This file
+contracts/Crowdfunding.sol   // Smart contract (deploy via Remix)
+index.html                   // UI markup
+style.css                    // Styling
+script.js                    // Frontend + blockchain logic
+config.js                    // Contract address + ABI
+README.md                    // This file
 ```
 
-## 🔗 Smart Contract Deployment
+## 🐛 Common Issues
 
-**Important**: This project is the **frontend only**. The smart contract must be deployed separately:
-
-1. **Contract Location**: `contracts/Crowdfunding.sol`
-2. **Deploy On**: [Remix IDE](https://remix.ethereum.org/)
-3. **Network**: Sepolia Testnet
-4. **Update**: Contract address in `config.js`
-
-## 🧪 Testing
-
-### Test Campaign Creation
-1. Create campaign with 5-minute duration
-2. Fund partially (don't reach goal)
-3. Wait for deadline to pass
-4. Verify automatic refunds
-
-### Test Values
-- **Duration**: 5 minutes (quick testing)
-- **Goal**: 0.5 ETH
-- **Funding**: 0.1 ETH (partial)
-
-## 🐛 Troubleshooting
-
-| Issue | Solution |
-|-------|----------|
-| MetaMask not found | Install MetaMask extension |
-| Wrong network | Switch to Sepolia testnet |
-| Transaction fails | Check gas fees and network |
-| Campaigns not loading | Verify contract address in config.js |
-| CORS errors | Use local server, don't open file directly |
-
-## 📊 Campaign States
-
-- **Active** - Accepting contributions
-- **Goal Reached** - Owner can withdraw funds
-- **Refunded** - Contributors automatically refunded
-- **Completed** - Funds withdrawn by owner
-
+- **MetaMask not detected**: Install MetaMask and refresh.  
+- **Wrong network**: Switch MetaMask to **Sepolia**.  
+- **Campaigns not loading / tx failing**: Check `CONTRACT_ADDRESS` and ABI in `config.js`, and confirm you redeployed the latest contract.  

@@ -224,6 +224,7 @@ async function createCampaign(event) {
     try {
         const title = document.getElementById('campaignTitle').value;
         const description = document.getElementById('campaignDescription').value;
+        const imageUrl = document.getElementById('campaignImage').value || '';
         const goal = ethers.utils.parseEther(document.getElementById('campaignGoal').value);
         const durationInMinutes = parseInt(document.getElementById('campaignDuration').value);
         
@@ -244,7 +245,7 @@ async function createCampaign(event) {
         
         showNotification('Creating campaign... Please confirm the transaction in MetaMask', 'success');
         
-        const tx = await contract.createCampaign(title, description, goal, durationInMinutes);
+        const tx = await contract.createCampaign(title, description, imageUrl, goal, durationInMinutes);
         
         showNotification('Transaction submitted! Waiting for confirmation...', 'success');
         
@@ -411,6 +412,7 @@ async function loadCampaigns() {
                     owner: campaign.owner,
                     title: campaign.title,
                     description: campaign.description,
+                    imageUrl: campaign.imageUrl,
                     goal: campaign.goal,
                     deadline: campaign.deadline,
                     fundsRaised: campaign.fundsRaised,
@@ -498,6 +500,10 @@ function createCampaignCard(campaign) {
             <h3 class="campaign-title">${escapeHtml(campaign.title)}</h3>
             <p class="campaign-owner">Owner: ${campaign.owner.slice(0, 6)}...${campaign.owner.slice(-4)}</p>
         </div>
+        ${campaign.imageUrl ? `
+        <div class="campaign-image">
+            <img src="${escapeHtml(campaign.imageUrl)}" alt="Campaign image" onerror="this.style.display='none';" />
+        </div>` : ''}
         <p class="campaign-description">${escapeHtml(campaign.description)}</p>
         <div class="campaign-stats">
             <div class="stat-item">

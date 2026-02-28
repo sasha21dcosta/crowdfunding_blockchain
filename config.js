@@ -6,7 +6,7 @@ const CONFIG = {
     // Replace with your deployed contract address from Remix
     // IMPORTANT: Make sure this contract is deployed on the same network as your MetaMask
     // For testing, deploy on Sepolia testnet and get free test ETH from faucets
-    CONTRACT_ADDRESS: "0x2eEf9A753ae7C98087e77B9EdF4ceEC6A878e231", // Replace with new deployed contract address 
+    CONTRACT_ADDRESS: "0x6164767430e45694680031a574DEDA299DB2324a", // Replace with new deployed contract address 
     
     // Replace with your contract ABI from Remix
     CONTRACT_ABI: [
@@ -29,6 +29,18 @@ const CONFIG = {
                     "indexed": false,
                     "internalType": "string",
                     "name": "title",
+                    "type": "string"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "string",
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "string",
+                    "name": "imageUrl",
                     "type": "string"
                 },
                 {
@@ -130,6 +142,11 @@ const CONFIG = {
                     "type": "string"
                 },
                 {
+                    "internalType": "string",
+                    "name": "imageUrl",
+                    "type": "string"
+                },
+                {
                     "internalType": "uint256",
                     "name": "goal",
                     "type": "uint256"
@@ -147,6 +164,11 @@ const CONFIG = {
                 {
                     "internalType": "bool",
                     "name": "completed",
+                    "type": "bool"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "refunded",
                     "type": "bool"
                 }
             ],
@@ -187,6 +209,11 @@ const CONFIG = {
                 {
                     "internalType": "string",
                     "name": "_description",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "_imageUrl",
                     "type": "string"
                 },
                 {
@@ -241,6 +268,11 @@ const CONFIG = {
                 {
                     "internalType": "string",
                     "name": "description",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "imageUrl",
                     "type": "string"
                 },
                 {
@@ -335,6 +367,11 @@ const CONFIG = {
                 {
                     "internalType": "string",
                     "name": "description",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "imageUrl",
                     "type": "string"
                 },
                 {
